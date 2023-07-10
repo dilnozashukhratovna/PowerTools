@@ -1,25 +1,85 @@
 const Client = require("../models/client");
-const getClients = (ctx) => {};
-
-const getClientById = (ctx) => {};
+const { ValidationError } = require("sequelize");
 
 const addClient = async (ctx) => {
     try {
-        const { client_name, client_phone_number } = ctx.request.body;
+        const { name, phone_number, email } = ctx.request.body;
         const newClient = await Client.create({
-            client_name,
-            client_phone_number,
+            name,
+            phone_number,
+            email,
         });
         ctx.status = 201;
         ctx.body = newClient;
     } catch (error) {
-        ctx.status = 500
-        ctx.body = "Serverda xatolik"
+        if (error instanceof ValidationError) {
+            ctx.status = 400;
+            ctx.body = "Validation Error: " + error.message;
+        } else {
+            ctx.status = 500;
+            ctx.body = "Internal Server Error";
+        }
     }
 };
 
+const getAllClients = async (ctx) => {
+    try {
+        const clients = await Client.findAll();
+        if (clients.length === 0) {
+            ctx.status = 400;
+            ctx.body = "Clients not found";
+        } else {
+            ctx.status = 200;
+            ctx.body = clients;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = "Internal Server Error";
+    }
+};
+
+const getClientById = async (ctx) => {
+    try {
+        const id = ctx.params.id;
+        const client = await Client.findByPk(id);
+        if (!client) {
+            ctx.status = 404;
+            ctx.body = "Client not found";
+        } else {
+            ctx.status = 200;
+            ctx.body = client;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = "Internal Server Error";
+    }
+};
+
+const deleteClient = async (ctx) => {
+    try {
+        const id = ctx.params.id;
+        const deletedClient = await Client.destroy({
+            where: {
+                id: id,
+            },
+        });
+        if (deletedClient === 0) {
+            ctx.status = 404;
+            ctx.body = "Client not found";
+        } else {
+            ctx.status = 200;
+            ctx.body = "Client deleted successfully";
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = "Internal Server Error";
+    }
+};
+
+
 module.exports = {
-    getClients,
+    getAllClients,
     getClientById,
     addClient,
+    deleteClient,
 };

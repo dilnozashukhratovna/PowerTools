@@ -2,8 +2,8 @@ const sequelize = require("../config/db");
 
 const { DataTypes } = require("sequelize");
 
-const Client = sequelize.define(
-    "client",
+const Shop = sequelize.define(
+    "shop",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -11,20 +11,29 @@ const Client = sequelize.define(
             autoIncrement: true,
         },
         name: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(20),
+        },
+        owner_id: {
+            type: DataTypes.INTEGER,
         },
         phone_number: {
             type: DataTypes.STRING(15),
             unique: true,
         },
-        email: {
+        district_id: {
+            type: DataTypes.INTEGER,
+        },
+        address: {
+            type: DataTypes.STRING,
+        },
+        location: {
             type: DataTypes.STRING,
         },
     },
     {
         freezeTableName: true,
-        timestamps: false
+        timestamps: false,
     }
 );
 
-module.exports = Client;
+module.exports = Shop;
