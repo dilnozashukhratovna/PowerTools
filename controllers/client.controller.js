@@ -76,10 +76,36 @@ const deleteClient = async (ctx) => {
     }
 };
 
+const updateClient = async (ctx) => {
+    try {
+        const id = ctx.params.id;
+        const { name, phone_number, email } = ctx.request.body;
+        const [client] = await Client.update(
+            { name, phone_number, email },
+            {
+                where: {
+                    id: id,
+                },
+            }
+        );
+        if (client === 0) {
+            ctx.status = 404;
+            ctx.body = "Client not found";
+        } else {
+            const updatedClient = await Client.findByPk(id);
+            ctx.status = 200;
+            ctx.body = updatedClient;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = "Internal Server Error";
+    }
+};
 
 module.exports = {
     getAllClients,
     getClientById,
     addClient,
     deleteClient,
+    updateClient,
 };
