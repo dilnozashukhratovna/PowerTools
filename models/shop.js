@@ -13,9 +13,6 @@ const Shop = sequelize.define(
         name: {
             type: DataTypes.STRING(20),
         },
-        owner_id: {
-            type: DataTypes.INTEGER,
-        },
         phone_number: {
             type: DataTypes.STRING(15),
             unique: true,

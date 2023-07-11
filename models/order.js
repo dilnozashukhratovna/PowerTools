@@ -1,6 +1,8 @@
 const sequelize = require("../config/db");
 
 const { DataTypes } = require("sequelize");
+const Client = require("./client");
+const ShopTool = require("./shop_tool");
 
 const Order = sequelize.define(
     "order",
@@ -9,12 +11,6 @@ const Order = sequelize.define(
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-        },
-        client_id: {
-            type: DataTypes.BIGINT,
-        },
-        shop_tool_id: {
-            type: DataTypes.BIGINT,
         },
         order_date: {
             type: DataTypes.DATE,
@@ -31,5 +27,11 @@ const Order = sequelize.define(
         timestamps: false,
     }
 );
+
+Client.hasMany(Order);
+Order.belongsTo(Client);
+
+ShopTool.hasMany(Order);
+Order.belongsTo(ShopTool);
 
 module.exports = Order;

@@ -5,7 +5,7 @@ const {
     addShopTool,
     deleteShopTool,
     updateShopTool,
-} = require("../controllers/ShopTool.controller");
+} = require("../controllers/shop_tool.controller");
 
 const router = new Router();
 

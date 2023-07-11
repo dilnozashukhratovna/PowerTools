@@ -3,12 +3,12 @@ const { ValidationError } = require("sequelize");
 
 const addShopTool = async (ctx) => {
     try {
-        const { shop_id, tool_id, rent_price, tool_price } = ctx.request.body;
+        const { rent_price, tool_price, shopId, toolId } = ctx.request.body;
         const newShopTool = await ShopTool.create({
-            shop_id,
-            tool_id,
             rent_price,
             tool_price,
+            shopId,
+            toolId,
         });
         ctx.status = 201;
         ctx.body = newShopTool;
@@ -80,9 +80,9 @@ const deleteShopTool = async (ctx) => {
 const updateShopTool = async (ctx) => {
     try {
         const id = ctx.params.id;
-        const { shop_id, tool_id, rent_price, tool_price } = ctx.request.body;
+        const { rent_price, tool_price, shopId, toolId } = ctx.request.body;
         const [ShopTool] = await ShopTool.update(
-            { shop_id, tool_id, rent_price, tool_price },
+            { rent_price, tool_price, shopId, toolId },
             {
                 where: {
                     id: id,

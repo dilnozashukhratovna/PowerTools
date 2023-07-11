@@ -1,6 +1,7 @@
 const sequelize = require("../config/db");
 
 const { DataTypes } = require("sequelize");
+const Shop = require("./shop");
 
 const Owner = sequelize.define(
     "owner",
@@ -25,5 +26,9 @@ const Owner = sequelize.define(
         timestamps: false,
     }
 );
+
+Shop.belongsTo(Owner)
+Owner.hasMany(Shop)
+
 
 module.exports = Owner;
