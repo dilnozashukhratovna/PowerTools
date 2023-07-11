@@ -1,6 +1,7 @@
 const sequelize = require("../config/db");
 
 const { DataTypes } = require("sequelize");
+const District = require("./district");
 
 const Shop = sequelize.define(
     "shop",
@@ -17,9 +18,6 @@ const Shop = sequelize.define(
             type: DataTypes.STRING(15),
             unique: true,
         },
-        district_id: {
-            type: DataTypes.INTEGER,
-        },
         address: {
             type: DataTypes.STRING,
         },
@@ -32,5 +30,8 @@ const Shop = sequelize.define(
         timestamps: false,
     }
 );
+
+Shop.belongsTo(District);
+District.hasMany(Shop);
 
 module.exports = Shop;

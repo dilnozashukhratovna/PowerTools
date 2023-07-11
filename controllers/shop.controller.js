@@ -4,8 +4,15 @@ const Tool = require("../models/tool");
 
 const addShop = async (ctx) => {
     try {
-        const { name, phone_number, district_id, address, location, ownerId } =
-            ctx.request.body;
+        const {
+            name,
+            phone_number,
+            district_id,
+            address,
+            location,
+            ownerId,
+            districtId,
+        } = ctx.request.body;
         const newShop = await Shop.create({
             name,
             phone_number,
@@ -13,6 +20,7 @@ const addShop = async (ctx) => {
             address,
             location,
             ownerId,
+            districtId,
         });
         ctx.status = 201;
         ctx.body = newShop;
@@ -29,7 +37,7 @@ const addShop = async (ctx) => {
 
 const getAllShops = async (ctx) => {
     try {
-        const shops = await Shop.findAll({include: Tool});
+        const shops = await Shop.findAll({ include: Tool });
         if (shops.length === 0) {
             ctx.status = 400;
             ctx.body = "Shops not found";
@@ -84,10 +92,25 @@ const deleteShop = async (ctx) => {
 const updateShop = async (ctx) => {
     try {
         const id = ctx.params.id;
-        const { name, phone_number, district_id, address, location, ownerId } =
-            ctx.request.body;
+        const {
+            name,
+            phone_number,
+            district_id,
+            address,
+            location,
+            ownerId,
+            districtId,
+        } = ctx.request.body;
         const [shop] = await Shop.update(
-            { name, phone_number, district_id, address, location, ownerId },
+            {
+                name,
+                phone_number,
+                district_id,
+                address,
+                location,
+                ownerId,
+                districtId,
+            },
             {
                 where: {
                     id: id,
