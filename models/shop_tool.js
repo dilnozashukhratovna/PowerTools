@@ -34,4 +34,10 @@ const ShopTool = sequelize.define(
 Shop.belongsToMany(Tool, { through: ShopTool });
 Tool.belongsToMany(Shop, { through: ShopTool });
 
+Shop.hasMany(ShopTool)
+ShopTool.belongsTo(Shop)
+
+Tool.hasMany(ShopTool);
+ShopTool.belongsTo(Tool);
+
 module.exports = ShopTool;
