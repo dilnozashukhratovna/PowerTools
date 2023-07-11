@@ -16,6 +16,9 @@ const Admin = sequelize.define(
         phone_number: {
             type: DataTypes.STRING(15),
         },
+        is_active: {
+            type: DataTypes.BOOLEAN,
+        },
         otp_id: {
             type: DataTypes.STRING,
             allowNull: false,

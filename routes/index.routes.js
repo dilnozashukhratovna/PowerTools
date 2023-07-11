@@ -9,9 +9,7 @@ const shop_toolRouter = require("./shop_tool.routes");
 const orderRouter = require("./order.routes");
 const toolRouter = require("./tool.routes");
 const districtRouter = require("./district.routes");
-
-
-
+const adminRouter = require("./admin.routes");
 
 router.use("/api/client", clientRouter());
 router.use("/api/shop", shopRouter());
@@ -20,8 +18,6 @@ router.use("/api/shop_tool", shop_toolRouter());
 router.use("/api/order", orderRouter());
 router.use("/api/tool", toolRouter());
 router.use("/api/district", districtRouter());
-
-
-
+router.use("/api/admin", adminRouter());
 
 module.exports = () => router.routes();
